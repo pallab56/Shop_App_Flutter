@@ -1,4 +1,7 @@
+
 import 'package:flutter/material.dart';
+import 'package:shop_app_flutter/global_variable.dart';
+import 'package:shop_app_flutter/products_card.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -69,23 +72,39 @@ class _HomeScreenState extends State<HomeScreen> {
                       onTap: () {
                         selectedFilter = filters;
                         print('$selectedFilter');
-                        setState(() {
-                          
-                        });
+                        setState(() {});
                       },
                       child: Chip(
                         padding: EdgeInsets.all(12),
                         side: BorderSide(
                           width: 1,
-                          color:Color.fromRGBO(225, 225, 225, 1),
+                          color: Color.fromRGBO(225, 225, 225, 1),
                         ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
                         ),
-                        backgroundColor:selectedFilter == filters?Theme.of(context).primaryColor : Color.fromRGBO(245, 247, 249, 1),
+                        backgroundColor: selectedFilter == filters
+                            ? Theme.of(context).primaryColor
+                            : Color.fromRGBO(245, 247, 249, 1),
                         label: Text(filtersData[index]),
                       ),
                     ),
+                  );
+                },
+              ),
+            ),
+
+            SizedBox(height: 20,),
+            /// Products Card
+            Expanded(
+              child: ListView.builder(
+                itemCount: products.length,
+                itemBuilder: (context, index) {
+                  final product = products[index];
+                  return ProductsCard(title: product['title'] as String,
+                  price: double.parse(product['price'].toString()),
+                  image: product['imageUrl'].toString(),
+                  index: index,
                   );
                 },
               ),

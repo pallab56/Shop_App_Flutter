@@ -24,6 +24,19 @@ class MyApp extends StatelessWidget {
               fontSize: 16,
               fontWeight: FontWeight.bold
             ),
+          ),
+
+          textTheme: TextTheme(
+            titleMedium: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'Lato'
+            ),
+            bodySmall: TextStyle(
+              fontSize: 18,
+              color: Colors.black54,
+              fontWeight: FontWeight.w500,
+            )
           )
       ),
       home: HomeScreen(),

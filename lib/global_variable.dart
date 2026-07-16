@@ -39,6 +39,6 @@ final cart = [
     'price': 420.69,
     'imageUrl':'assets/images/shoes_4.png',
     'company':'Nike',
-    'size': [8],
+    'size': 8,
     },
 ];

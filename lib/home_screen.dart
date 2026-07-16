@@ -21,9 +21,12 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: Colors.white,
       body: IndexedStack(
         index: currentPage,
-        children: pages,
+        children:pages
       ),
       bottomNavigationBar: BottomNavigationBar(
+        // selectedFontSize: 0,
+        // unselectedFontSize: 0,
+        iconSize: 32,
         backgroundColor: Colors.white,
         onTap: (value) {
           setState(() {

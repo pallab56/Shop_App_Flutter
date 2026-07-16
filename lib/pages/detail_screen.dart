@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shop_app_flutter/cart_page.dart';
-import 'package:shop_app_flutter/cart_provider.dart';
+import 'package:shop_app_flutter/pages/cart_page.dart';
+import 'package:shop_app_flutter/provider/cart_provider.dart';
 
 class DetailScreen extends StatefulWidget {
   final Map<String, Object> product;

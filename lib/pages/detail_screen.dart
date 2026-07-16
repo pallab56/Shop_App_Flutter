@@ -138,7 +138,7 @@ class _DetailScreenState extends State<DetailScreen> {
                     onPressed: onTap,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Theme.of(context).colorScheme.primary,
-                      minimumSize: Size(double.infinity, 45),
+                      fixedSize: Size(350, 45),
                     ),
                     icon: Icon(
                       Icons.shopping_cart_outlined,

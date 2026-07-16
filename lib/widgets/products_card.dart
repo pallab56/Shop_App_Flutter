@@ -8,12 +8,12 @@ class ProductsCard extends StatelessWidget {
   final int index;
 
   const ProductsCard({
-    Key? key,
+    super.key,
     required this.title,
     required this.price,
     required this.image,
     required this.index,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

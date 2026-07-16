@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:shop_app_flutter/global_variable.dart';
+import 'package:provider/provider.dart';
+import 'package:shop_app_flutter/cart_page.dart';
+import 'package:shop_app_flutter/cart_provider.dart';
 
 class DetailScreen extends StatefulWidget {
   final Map<String, Object> product;
@@ -11,20 +13,50 @@ class DetailScreen extends StatefulWidget {
 }
 
 class _DetailScreenState extends State<DetailScreen> {
-  late  int currentSize;
+  int selectedSize = 0;
 
-  @override
-  void initState() {
-    super.initState();
-    currentSize = (products[0]['sizes'] as List<int>)[0];
-    
+  void onTap() {
+    if (selectedSize != 0) {
+      Provider.of<CartProvider>(context, listen: false).addProduct({
+        'id': widget.product['id'],
+        'title': widget.product['title'],
+        'price': widget.product['price'],
+        'imageUrl': widget.product['imageUrl'],
+        'company': widget.product['company'],
+        'size': selectedSize,
+      });
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Product Added Succesfully')));
+      Navigator.of(context).pop();
+    } else {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('You Have To CHoose Size')));
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(centerTitle: true, title: Text("DetailScreen")),
+      appBar: AppBar(
+        actions: [
+          IconButton(
+            splashColor: Colors.amberAccent,
+            splashRadius: 20,
+            tooltip: 'Cart',
+            onPressed: () {
+              Navigator.of(
+                context,
+              ).push(MaterialPageRoute(builder: (context) => CartPage()));
+            },
+            icon: Icon(Icons.shopping_cart_outlined),
+          ),
+        ],
+        centerTitle: true,
+        title: Text("DetailScreen"),
+      ),
       body: Column(
         children: [
           Text(
@@ -68,21 +100,20 @@ class _DetailScreenState extends State<DetailScreen> {
                     scrollDirection: Axis.horizontal,
                     itemCount: (widget.product['sizes'] as List<int>).length,
                     itemBuilder: (BuildContext context, index) {
-                      final selectSize =
+                      final size =
                           (widget.product['sizes'] as List<int>)[index];
                       return Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 12),
                         child: InkWell(
                           onTap: () {
-                           
                             setState(() {
-                               currentSize = selectSize;
+                              selectedSize = size;
                             });
                           },
                           child: Chip(
-                            backgroundColor: currentSize == selectSize
+                            backgroundColor: selectedSize == size
                                 ? Theme.of(context).colorScheme.primary
-                                : Colors.white,
+                                : null,
                             side: BorderSide(
                               color: Color.fromRGBO(245, 247, 249, 1),
                             ),
@@ -93,7 +124,7 @@ class _DetailScreenState extends State<DetailScreen> {
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 8,
                               ),
-                              child: Text(selectSize.toString()),
+                              child: Text(size.toString()),
                             ),
                           ),
                         ),
@@ -104,12 +135,14 @@ class _DetailScreenState extends State<DetailScreen> {
                 Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: ElevatedButton.icon(
-                    onPressed: () {},
+                    onPressed: onTap,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Theme.of(context).colorScheme.primary,
                       minimumSize: Size(double.infinity, 45),
                     ),
-                    icon: Icon(Icons.shopping_cart_outlined,color: Colors.black,
+                    icon: Icon(
+                      Icons.shopping_cart_outlined,
+                      color: Colors.black,
                     ),
                     label: Text(
                       "Add To Cart",
